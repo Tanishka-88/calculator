@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e1e2f, #111119);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .box {
+            width: 360px;
+            background-color: #232334;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(5, 100px);
+            padding: 20px;
+            gap: 15px;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .sbox {
+            background-color: #2e2e42;
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 600;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.15s ease;
+        }
+
+        .sbox:hover {
+            background-color: #3b3b54;
+            transform: translateY(-2px);
+        }
+
+        .sbox:active {
+            transform: translateY(1px);
+        }
+
+        /* Target operators specifically */
+        .sbox:nth-child(5), 
+        .sbox:nth-child(9), 
+        .sbox:nth-child(13), 
+        .sbox:nth-child(17) {
+            background-color: #ff9f0a;
+            color: #ffffff;
+        }
+        .sbox:nth-child(5):hover, 
+        .sbox:nth-child(9):hover, 
+        .sbox:nth-child(13):hover, 
+        .sbox:nth-child(17):hover {
+            background-color: #cc7f08;
+        }
+
+        /* Target the equal sign */
+        .sbox:nth-child(16) {
+            background-color: #30d158;
+            color: #ffffff;
+        }
+        .sbox:nth-child(16):hover {
+            background-color: #24a142;
+        }
+
+        #screen {
+            grid-column: 1 / 5;
+            background-color: #161622;
+            color: #00e5ff;
+            font-size: 36px;
+            padding: 0 20px 15px 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            border-radius: 12px;
+            overflow-x: auto;
+            white-space: nowrap;
+            cursor: default;
+        }
+        
+        #screen:hover {
+            background-color: #161622;
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="sbox" id="screen"></div>
+        <div class="sbox" onclick="cal('7')">7</div>
+        <div class="sbox" onclick="cal('8')">8</div>
+        <div class="sbox" onclick="cal('9')">9</div>
+        <div class="sbox" onclick="cal('/')">/</div>
+        <div class="sbox" onclick="cal('4')">4</div>
+        <div class="sbox" onclick="cal('5')">5</div>
+        <div class="sbox" onclick="cal('6')">6</div>
+        <div class="sbox" onclick="cal('*')">*</div>
+        <div class="sbox" onclick="cal('1')">1</div>
+        <div class="sbox" onclick="cal('2')">2</div>
+        <div class="sbox" onclick="cal('3')">3</div>
+        <div class="sbox" onclick="cal('-')">-</div>
+        <div class="sbox" onclick="cal('0')">0</div>
+        <div class="sbox" onclick="cal('.')">.</div>
+        <div class="sbox" onclick="cal('=')">=</div>
+        <div class="sbox" onclick="cal('+')">+</div>
+
+        <script>
+            let screentext = "";
+            function screenupdate(txt) {
+                screentext += txt;
+                document.getElementById("screen").innerText = screentext;
+            }
+            function cal(btn) {
+                switch(btn) {
+                    case '1': screenupdate('1'); break;
+                    case '2': screenupdate('2'); break;
+                    case '3': screenupdate('3'); break;
+                    case '4': screenupdate('4'); break;
+                    case '5': screenupdate('5'); break;
+                    case '6': screenupdate('6'); break;
+                    case '7': screenupdate('7'); break;
+                    case '8': screenupdate('8'); break;
+                    case '9': screenupdate('9'); break;
+                    case '0': screenupdate('0'); break;
+                    case '.': screenupdate('.'); break;
+                    case '+': screenupdate('+'); break;
+                    case '-': screenupdate('-'); break;
+                    case '*': screenupdate('*'); break;
+                    case '/': screenupdate('/'); break;
+                    case '=':
+                        let temp = document.getElementById("screen").innerText;
+                        if(temp !== "") {
+                            try {
+                                let result = eval(temp);
+                                document.getElementById("screen").innerText = result;
+                                screentext = result.toString(); // reset state to result
+                            } catch(e) {
+                                document.getElementById("screen").innerText = "Error";
+                                screentext = "";
+                            }
+                        }
+                        break;
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>
